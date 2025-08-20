@@ -1,36 +1,127 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Content Success Predictor
 
-## Getting Started
+An internal web app for Optiminastic that predicts how marketing assets (images/videos) will perform across multiple platforms using AI-powered analysis.
 
-First, run the development server:
+## Features
+
+- **Authentication**: Google Workspace SSO restricted to @optiminastic.com
+- **Asset Upload**: Drag-and-drop images/videos (processed in-memory only)
+- **Platform Analysis**: Multi-platform predictions (Instagram, Facebook, X, TikTok, Snapchat, LinkedIn)
+- **AI Predictions**: Success scores, polarisation analysis, strategic insights
+- **Brand Safety**: NSFW, violent, and sensitive content detection
+- **Reporting**: Downloadable PDF reports
+- **Audit Logs**: Track all user activities
+- **Privacy**: No asset storage, processed in-memory only
+
+## Tech Stack
+
+### Frontend & Backend
+- **Next.js 15** with App Router
+- **TypeScript** for type safety
+- **Tailwind CSS** for styling
+- **NextAuth.js** for Google Workspace authentication
+- **React components** with modern hooks
+
+### AI/ML Service
+- **Python FastAPI** for model serving
+- **PyTorch/TensorFlow** for ML models (production)
+- **Computer Vision** for image/video analysis
+- **Content Moderation** for brand safety
+
+## Quick Start
+
+### 1. Frontend Setup
 
 ```bash
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.local.example .env.local
+# Edit .env.local with your Google OAuth credentials
+
+# Run development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Python Service Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Navigate to python service
+cd python-service
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
 
-## Learn More
+# Install dependencies
+pip install -r requirements.txt
 
-To learn more about Next.js, take a look at the following resources:
+# Run the service
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 3. Google OAuth Setup
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select existing
+3. Enable Google+ API
+4. Create OAuth 2.0 credentials
+5. Add authorized redirect URIs:
+   - `http://localhost:3000/api/auth/callback/google`
+6. Set environment variables in `.env.local`
 
-## Deploy on Vercel
+## Environment Variables
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Create `.env.local` with:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```env
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your-nextauth-secret-here
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+PYTHON_MODEL_SERVICE_URL=http://localhost:8000
+```
+
+## User Flow
+
+1. **Login** → Google Workspace authentication (@optiminastic.com only)
+2. **Upload** → Drag & drop marketing asset
+3. **Select Platforms** → Choose target social platforms
+4. **Predict** → AI analyzes and scores content
+5. **Review Results** → View success scores, polarisation, recommendations
+6. **Download Report** → Export PDF for client/internal use
+
+## Security Features
+
+- **No Storage**: Assets processed in-memory, immediately discarded
+- **Domain Restriction**: Only @optiminastic.com emails allowed
+- **Audit Logging**: All activities tracked with timestamps
+- **Brand Safety**: Always-on content moderation
+- **HTTPS**: All communications encrypted (production)
+
+## Development Notes
+
+### Current State
+- Uses mock AI predictions for development
+- In-memory audit logging (production should use database)
+- Brand safety checks are simulated
+
+### Production Deployment
+1. Train and deploy actual ML models
+2. Set up proper database for audit logs
+3. Configure production Google OAuth
+4. Deploy to secure cloud infrastructure
+5. Set up monitoring and logging
+
+## Contributing
+
+1. Follow TypeScript strict mode
+2. Use ESLint and Prettier
+3. Test all authentication flows
+4. Ensure responsive design
+5. Maintain security best practices
+
+## License
+
+Internal use only - Optiminastic
