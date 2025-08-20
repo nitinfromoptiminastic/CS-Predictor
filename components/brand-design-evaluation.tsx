@@ -183,7 +183,7 @@ export function BrandDesignEvaluationComponent({ evaluation }: BrandDesignEvalua
                 key={index}
                 className="inline-block bg-blue-100 border border-blue-200 text-blue-800 text-sm px-3 py-1 rounded-full font-medium"
               >
-                "{text}"
+                &ldquo;{text}&rdquo;
               </span>
             ))}
           </div>

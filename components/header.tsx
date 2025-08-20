@@ -1,6 +1,6 @@
 'use client';
 
-import { User, LogOut, Eye, History } from 'lucide-react';
+import { User, LogOut, Eye } from 'lucide-react';
 import { useState } from 'react';
 import { AuditLogs } from './audit-logs';
 
