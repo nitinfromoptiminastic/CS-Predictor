@@ -55,6 +55,22 @@ export function Dashboard() {
     }
   };
 
+  const handleSignOut = async () => {
+    const confirmed = window.confirm('Are you sure you want to sign out?');
+    if (confirmed) {
+      try {
+        await signOut({ 
+          callbackUrl: '/auth/signin',
+          redirect: true 
+        });
+      } catch (error) {
+        console.error('Sign out error:', error);
+        // Fallback to force sign out
+        await signOut();
+      }
+    }
+  };
+
   const handleReset = () => {
     setUploadedFile(null);
     setSelectedPlatforms([]);
@@ -65,7 +81,7 @@ export function Dashboard() {
     <div className="min-h-screen bg-gray-50">
       <Header 
         userEmail={session?.user?.email || ''} 
-        onSignOut={() => signOut()} 
+        onSignOut={handleSignOut} 
       />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

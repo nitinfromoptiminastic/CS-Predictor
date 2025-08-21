@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { ModelService } from '@/lib/model-service';
-import { AuditService } from '@/lib/audit-service';
 
 export async function POST(request: NextRequest) {
   try {
@@ -40,15 +39,7 @@ export async function POST(request: NextRequest) {
     // Analyze the asset
     const result = await ModelService.analyzAsset(buffer, file.name, platforms);
 
-    // Log the action
-    await AuditService.logAction(
-      session.user.email,
-      session.user.email,
-      'Asset Analysis',
-      platforms,
-      file.name,
-      file.type
-    );
+    console.log(`Asset analysis completed for ${session.user.email}: ${file.name} on platforms: ${platforms.join(', ')}`);
 
     return NextResponse.json({
       success: true,
