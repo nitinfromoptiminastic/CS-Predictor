@@ -1,7 +1,7 @@
 'use client';
 
 import { signIn, getProviders } from 'next-auth/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { LogIn } from 'lucide-react';
 import { useSearchParams } from 'next/navigation';
 
@@ -13,7 +13,7 @@ interface Provider {
   callbackUrl: string;
 }
 
-export default function SignInPage() {
+function SignInContent() {
   const [providers, setProviders] = useState<Record<string, Provider> | null>(null);
   const [error, setError] = useState<string | null>(null);
   const searchParams = useSearchParams();
@@ -91,5 +91,17 @@ export default function SignInPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div>Loading...</div>
+      </div>
+    }>
+      <SignInContent />
+    </Suspense>
   );
 }
