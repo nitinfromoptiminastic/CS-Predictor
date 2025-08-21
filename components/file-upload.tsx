@@ -48,68 +48,99 @@ export function FileUpload({ onFileSelect, selectedFile }: FileUploadProps) {
 
   return (
     <div className="space-y-4">
-      <h3 className="text-lg font-medium text-gray-900">Upload Asset</h3>
-      
       {selectedFile ? (
-        <div className="bg-white p-6 rounded-lg shadow-sm border">
+        <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-6 rounded-2xl border-2 border-green-200 shadow-lg">
           <div className="flex items-start justify-between mb-4">
             <div className="flex items-center">
-              {selectedFile.type.startsWith('image/') ? (
-                <ImageIcon className="h-5 w-5 text-green-600 mr-2" />
-              ) : (
-                <Video className="h-5 w-5 text-green-600 mr-2" />
-              )}
-              <span className="text-sm font-medium text-gray-900">
-                {selectedFile.name}
-              </span>
+              <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center mr-3">
+                {selectedFile.type.startsWith('image/') ? (
+                  <ImageIcon className="h-5 w-5 text-white" />
+                ) : (
+                  <Video className="h-5 w-5 text-white" />
+                )}
+              </div>
+              <div>
+                <span className="text-sm font-semibold text-gray-900 block">
+                  {selectedFile.name}
+                </span>
+                <span className="text-xs text-gray-600">
+                  {(selectedFile.size / 1024 / 1024).toFixed(2)} MB • {selectedFile.type.split('/')[0].toUpperCase()}
+                </span>
+              </div>
             </div>
             <button
               onClick={handleRemove}
-              className="text-gray-400 hover:text-gray-600"
+              className="text-red-400 hover:text-red-600 hover:bg-red-100 p-2 rounded-full transition-all duration-200"
             >
               <X className="h-4 w-4" />
             </button>
           </div>
           
           {preview && (
-            <div className="mt-4">
-              <Image 
-                src={preview} 
-                alt={`Preview of ${selectedFile.name}`}
-                width={200}
-                height={128}
-                className="max-w-full h-32 object-contain rounded"
-              />
+            <div className="mt-4 flex justify-center">
+              <div className="relative overflow-hidden rounded-xl shadow-md">
+                <Image 
+                  src={preview} 
+                  alt={`Preview of ${selectedFile.name}`}
+                  width={300}
+                  height={200}
+                  className="max-w-full h-48 object-cover"
+                />
+              </div>
             </div>
           )}
           
-          <div className="text-xs text-gray-500 mt-2">
-            {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
+          <div className="flex items-center justify-center mt-4 text-green-700 bg-green-100 rounded-lg py-2 px-4">
+            <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+            File uploaded successfully
           </div>
         </div>
       ) : (
         <div
           {...getRootProps()}
-          className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
+          className={`relative group border-2 border-dashed rounded-2xl p-12 text-center cursor-pointer transition-all duration-300 hover:shadow-lg ${
             isDragActive
-              ? 'border-blue-500 bg-blue-50'
-              : 'border-gray-300 hover:border-gray-400'
+              ? 'border-blue-500 bg-gradient-to-br from-blue-50 to-indigo-50 shadow-lg scale-105'
+              : 'border-gray-300 hover:border-blue-400 bg-gradient-to-br from-gray-50 to-white hover:bg-gradient-to-br hover:from-blue-50 hover:to-indigo-50'
           }`}
         >
           <input {...getInputProps()} />
-          <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-          {isDragActive ? (
-            <p className="text-blue-600">Drop the file here...</p>
-          ) : (
-            <>
-              <p className="text-gray-600 mb-2">
-                Drag & drop your asset here, or click to select
-              </p>
-              <p className="text-sm text-gray-500">
-                Images and videos up to 5GB
-              </p>
-            </>
-          )}
+          
+          {/* Floating elements */}
+          <div className="absolute top-4 right-4 w-3 h-3 bg-blue-400 rounded-full opacity-60 animate-pulse"></div>
+          <div className="absolute top-8 left-6 w-2 h-2 bg-purple-400 rounded-full opacity-40 animate-bounce"></div>
+          <div className="absolute bottom-6 right-8 w-2 h-2 bg-green-400 rounded-full opacity-50 animate-pulse"></div>
+          
+          <div className="relative">
+            <div className={`mx-auto w-20 h-20 rounded-2xl flex items-center justify-center mb-6 transition-all duration-300 ${
+              isDragActive 
+                ? 'bg-gradient-to-r from-blue-500 to-indigo-500 scale-110' 
+                : 'bg-gradient-to-r from-gray-400 to-gray-500 group-hover:from-blue-500 group-hover:to-indigo-500 group-hover:scale-110'
+            }`}>
+              <Upload className="h-10 w-10 text-white" />
+            </div>
+            
+            {isDragActive ? (
+              <div className="space-y-2">
+                <p className="text-xl font-semibold text-blue-600 animate-bounce">Drop it like it's hot! 🔥</p>
+                <p className="text-blue-500">Release to upload your asset</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                <h4 className="text-lg font-semibold text-gray-900 group-hover:text-blue-900 transition-colors">
+                  Upload Your Marketing Asset
+                </h4>
+                <p className="text-gray-600 group-hover:text-blue-700 transition-colors">
+                  Drag & drop your file here, or click to browse
+                </p>
+                <div className="flex flex-wrap justify-center gap-2 mt-4">
+                  <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full font-medium">Images</span>
+                  <span className="px-3 py-1 bg-purple-100 text-purple-800 text-xs rounded-full font-medium">Videos</span>
+                  <span className="px-3 py-1 bg-green-100 text-green-800 text-xs rounded-full font-medium">Up to 5GB</span>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>
