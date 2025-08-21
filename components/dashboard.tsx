@@ -169,10 +169,10 @@ export function Dashboard() {
                 ✨ AI-Powered Marketing Intelligence
               </div>
               <h1 className="text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-900 to-indigo-900 bg-clip-text text-transparent mb-6 leading-tight">
-                Predict Your Content's Success
+                Predict Your Content&apos;s Success
               </h1>
               <p className="text-xl text-gray-600 leading-relaxed mb-8">
-                Upload your marketing assets and discover how they'll perform across different platforms with our advanced AI analysis
+                Upload your marketing assets and discover how they&apos;ll perform across different platforms with our advanced AI analysis
               </p>
             </div>
 

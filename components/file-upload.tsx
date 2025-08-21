@@ -122,7 +122,7 @@ export function FileUpload({ onFileSelect, selectedFile }: FileUploadProps) {
             
             {isDragActive ? (
               <div className="space-y-2">
-                <p className="text-xl font-semibold text-blue-600 animate-bounce">Drop it like it's hot! 🔥</p>
+                <p className="text-xl font-semibold text-blue-600 animate-bounce">Drop it like it&apos;s hot! 🔥</p>
                 <p className="text-blue-500">Release to upload your asset</p>
               </div>
             ) : (
