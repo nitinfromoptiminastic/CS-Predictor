@@ -42,7 +42,7 @@ export function Header({ userEmail, onSignOut }: HeaderProps) {
               <h1 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
                 CS Predictor
               </h1>
-              <p className="text-xs text-gray-500 font-medium">AI-Powered Marketing Analytics</p>
+              {/* <p className="text-xs text-gray-500 font-medium">AI-Powered Marketing Analytics</p> */}
             </div>
           </div>
           
@@ -58,7 +58,7 @@ export function Header({ userEmail, onSignOut }: HeaderProps) {
                 </div>
                 <div className="hidden md:block text-left">
                   <div className="font-medium text-gray-900">{userEmail.split('@')[0]}</div>
-                  <div className="text-xs text-gray-500">@optiminastic.com</div>
+                  {/* <div className="text-xs text-gray-500">@optiminastic.com</div> */}
                 </div>
                 <ChevronDown className={`h-4 w-4 ml-2 transition-transform duration-200 ${showUserMenu ? 'rotate-180' : ''}`} />
               </button>

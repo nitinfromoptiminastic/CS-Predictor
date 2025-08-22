@@ -111,7 +111,7 @@ export function Dashboard() {
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
                   CS Predictor
                 </h1>
-                <p className="text-xs text-gray-500 font-medium">AI-Powered Marketing Analytics</p>
+                {/* <p className="text-xs text-gray-500 font-medium">AI-Powered Marketing Analytics</p> */}
               </div>
             </div>
             
@@ -165,14 +165,11 @@ export function Dashboard() {
           <div className="space-y-12">
             {/* Hero Section */}
             <div className="text-center max-w-4xl mx-auto">
-              <div className="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium mb-6">
-                ✨ AI-Powered Marketing Intelligence
-              </div>
               <h1 className="text-5xl font-bold bg-gradient-to-r from-gray-900 via-blue-900 to-indigo-900 bg-clip-text text-transparent mb-6 leading-tight">
                 Predict Your Content&apos;s Success
               </h1>
               <p className="text-xl text-gray-600 leading-relaxed mb-8">
-                Upload your marketing assets and discover how they&apos;ll perform across different platforms with our advanced AI analysis
+               We turn “hope it works” into “know it wins.”
               </p>
             </div>
 

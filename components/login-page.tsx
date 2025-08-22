@@ -50,9 +50,7 @@ export function LoginPage() {
               CS Predictor
             </h1>
             
-            <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-              AI-powered insights for your marketing assets across all platforms
-            </p>
+           
 
             {/* Feature highlights */}
             <div className="grid grid-cols-3 gap-4 mb-8">
@@ -74,10 +72,10 @@ export function LoginPage() {
           {/* Login Card */}
           <div className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-white/20">
             <div className="space-y-6">
-              <div className="flex items-center justify-center text-sm text-gray-500 bg-gray-50 rounded-lg p-3">
+              {/* <div className="flex items-center justify-center text-sm text-gray-500 bg-gray-50 rounded-lg p-3">
                 <Shield className="h-4 w-4 mr-2" />
                 Restricted to @optiminastic.com accounts only
-              </div>
+              </div> */}
               
               <button
                 onClick={handleSignIn}
@@ -86,7 +84,7 @@ export function LoginPage() {
                 <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -skew-x-12 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000 ease-out"></div>
                 <div className="relative flex items-center justify-center">
                   <LogIn className="h-5 w-5 mr-3" />
-                  Sign in with Google Workspace
+                  Sign in
                 </div>
               </button>
             </div>
