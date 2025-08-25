@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Content Success Predictor - Optiminastic",
+  title: "CS Predictor - Optiminastic",
   description: "Predict marketing asset performance across multiple platforms",
 };
 

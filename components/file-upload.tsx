@@ -98,7 +98,7 @@ export function FileUpload({ onFileSelect, selectedFile }: FileUploadProps) {
       ) : (
         <div
           {...getRootProps()}
-          className={`relative group border-2 border-dashed rounded-2xl p-12 text-center cursor-pointer transition-all duration-300 hover:shadow-lg ${
+          className={`relative group border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-all duration-300 hover:shadow-lg ${
             isDragActive
               ? 'border-blue-500 bg-gradient-to-br from-blue-50 to-indigo-50 shadow-lg scale-105'
               : 'border-gray-300 hover:border-blue-400 bg-gradient-to-br from-gray-50 to-white hover:bg-gradient-to-br hover:from-blue-50 hover:to-indigo-50'
@@ -112,31 +112,31 @@ export function FileUpload({ onFileSelect, selectedFile }: FileUploadProps) {
           <div className="absolute bottom-6 right-8 w-2 h-2 bg-green-400 rounded-full opacity-50 animate-pulse"></div>
           
           <div className="relative">
-            <div className={`mx-auto w-20 h-20 rounded-2xl flex items-center justify-center mb-6 transition-all duration-300 ${
+            <div className={`mx-auto w-16 h-16 rounded-2xl flex items-center justify-center mb-4 transition-all duration-300 ${
               isDragActive 
                 ? 'bg-gradient-to-r from-blue-500 to-indigo-500 scale-110' 
                 : 'bg-gradient-to-r from-gray-400 to-gray-500 group-hover:from-blue-500 group-hover:to-indigo-500 group-hover:scale-110'
             }`}>
-              <Upload className="h-10 w-10 text-white" />
+              <Upload className="h-8 w-8 text-white" />
             </div>
             
             {isDragActive ? (
               <div className="space-y-2">
-                <p className="text-xl font-semibold text-blue-600 animate-bounce">Drop it like it&apos;s hot! 🔥</p>
-                <p className="text-blue-500">Release to upload your asset</p>
+                <p className="text-lg font-semibold text-blue-600 animate-bounce">Drop it like it&apos;s hot! 🔥</p>
+                <p className="text-sm text-blue-500">Release to upload your asset</p>
               </div>
             ) : (
-              <div className="space-y-3">
-                <h4 className="text-lg font-semibold text-gray-900 group-hover:text-blue-900 transition-colors">
+              <div className="space-y-2">
+                <h4 className="text-base font-semibold text-gray-900 group-hover:text-blue-900 transition-colors">
                   Upload Your Marketing Asset
                 </h4>
-                <p className="text-gray-600 group-hover:text-blue-700 transition-colors">
+                <p className="text-sm text-gray-600 group-hover:text-blue-700 transition-colors">
                   Drag & drop your file here, or click to browse
                 </p>
-                <div className="flex flex-wrap justify-center gap-2 mt-4">
-                  <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full font-medium">Images</span>
-                  <span className="px-3 py-1 bg-purple-100 text-purple-800 text-xs rounded-full font-medium">Videos</span>
-                  <span className="px-3 py-1 bg-green-100 text-green-800 text-xs rounded-full font-medium">Up to 5GB</span>
+                <div className="flex flex-wrap justify-center gap-2 mt-3">
+                  <span className="px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full font-medium">Images</span>
+                  <span className="px-2 py-1 bg-purple-100 text-purple-800 text-xs rounded-full font-medium">Videos</span>
+                  <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded-full font-medium">Up to 5GB</span>
                 </div>
               </div>
             )}

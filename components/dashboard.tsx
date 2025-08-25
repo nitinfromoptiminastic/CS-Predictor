@@ -175,10 +175,10 @@ export function Dashboard() {
 
             {/* Upload and Analysis Section */}
             <div className="grid lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-              <div className="bg-white/70 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-white/20 hover:shadow-2xl transition-all duration-300">
-                <div className="mb-6">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Upload Your Asset</h3>
-                  <p className="text-gray-600">Support for images and videos up to 5GB</p>
+              <div className="bg-white/70 backdrop-blur-sm p-4 rounded-2xl shadow-xl border border-white/20 hover:shadow-2xl transition-all duration-300">
+                <div className="mb-3">
+                  <h3 className="text-xl font-bold text-gray-900 mb-1">Upload Your Asset</h3>
+                  <p className="text-gray-600 text-sm">Support for images and videos up to 5GB</p>
                 </div>
                 <FileUpload 
                   onFileSelect={setUploadedFile} 
@@ -186,10 +186,10 @@ export function Dashboard() {
                 />
               </div>
               
-              <div className="bg-white/70 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-white/20 hover:shadow-2xl transition-all duration-300">
-                <div className="mb-6">
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Select Platforms</h3>
-                  <p className="text-gray-600">Choose where you want to analyze performance</p>
+              <div className="bg-white/70 backdrop-blur-sm p-6 rounded-2xl shadow-xl border border-white/20 hover:shadow-2xl transition-all duration-300">
+                <div className="mb-4">
+                  <h3 className="text-xl font-bold text-gray-900 mb-1">Select Platforms</h3>
+                  <p className="text-gray-600 text-sm">Choose where you want to analyze performance</p>
                 </div>
                 <PlatformSelector
                   selectedPlatforms={selectedPlatforms}
