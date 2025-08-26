@@ -93,6 +93,48 @@ export interface BrandDesignEvaluation {
 }
 
 export interface AssetAnalysis {
+  // Enhanced Content Analysis Framework
+  contentIdentification: {
+    contentType: string;
+    confidence: number;
+    context: string;
+    relevantCategories: string[];
+  };
+  strategicPositioning: {
+    primaryStrategy: string;
+    secondaryStrategy: string;
+    strategyScore: number;
+    positioning: string;
+  };
+  emotionalAnalysis: {
+    primaryEmotion: string;
+    emotionalIntensity: number;
+    isPolarizing: boolean;
+    polarizationReason: string;
+    emotionalTriggers: string[];
+  };
+  platformFitAnalysis: {
+    instagram: number;
+    tiktok: number;
+    linkedin: number;
+    twitter: number;
+    youtube: number;
+    facebook: number;
+    snapchat: number;
+  };
+  performanceScoring: {
+    engagementPotential: number;
+    clarityOfMessage: number;
+    viralityLikelihood: number;
+  };
+  tailoredRecommendations: {
+    [platform: string]: {
+      prediction: string;
+      score: number;
+      optimizationTips: string[];
+    };
+  };
+  // Original analysis properties
   visualFeatures: {
     faces: number;
     objects: string[];
