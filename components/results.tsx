@@ -118,7 +118,7 @@ export function Results({ results, onReset, userEmail }: ResultsProps) {
       <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl shadow-sm border border-blue-100">
         <div className="flex items-center mb-6">
           <Target className="h-6 w-6 text-blue-600 mr-3" />
-          <h3 className="text-xl font-bold text-gray-900">5-Step Content Analysis Framework</h3>
+          <h3 className="text-xl font-bold text-gray-900">Content Analysis Framework</h3>
         </div>
         
         <div className="space-y-6">
@@ -126,7 +126,7 @@ export function Results({ results, onReset, userEmail }: ResultsProps) {
           <div className="bg-white p-5 rounded-lg shadow-sm border-l-4 border-blue-500">
             <div className="flex items-center mb-3">
               <span className="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3">1</span>
-              <h4 className="text-lg font-semibold text-gray-900">Content Identification (MANDATORY)</h4>
+              <h4 className="text-lg font-semibold text-gray-900">Content Identification</h4>
             </div>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
@@ -160,11 +160,11 @@ export function Results({ results, onReset, userEmail }: ResultsProps) {
             </div>
           </div>
 
-          {/* Step 2 - Strategy & Emotion */}
+          {/* Step 2 - Strategic Positioning */}
           <div className="bg-white p-5 rounded-lg shadow-sm border-l-4 border-green-500">
             <div className="flex items-center mb-3">
               <span className="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3">2</span>
-              <h4 className="text-lg font-semibold text-gray-900">Strategy & Emotion</h4>
+              <h4 className="text-lg font-semibold text-gray-900">Strategic Positioning</h4>
             </div>
             <div className="grid md:grid-cols-3 gap-4">
               <div>
@@ -206,11 +206,11 @@ export function Results({ results, onReset, userEmail }: ResultsProps) {
             </div>
           </div>
 
-          {/* Step 3 - Platform Fit (0-100) */}
+          {/* Step 4 - Platform Fit Analysis */}
           <div className="bg-white p-5 rounded-lg shadow-sm border-l-4 border-purple-500">
             <div className="flex items-center mb-3">
-              <span className="bg-purple-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3">3</span>
-              <h4 className="text-lg font-semibold text-gray-900">Platform Fit (0-100)</h4>
+              <span className="bg-purple-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3">4</span>
+              <h4 className="text-lg font-semibold text-gray-900">Platform Fit Analysis</h4>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
               {Object.entries(results.analysis.platformFitAnalysis || {}).map(([platform, score]) => (
@@ -226,11 +226,11 @@ export function Results({ results, onReset, userEmail }: ResultsProps) {
             </div>
           </div>
 
-          {/* Step 4 - Performance Scores (0-100) */}
+          {/* Step 5 - Performance Scores */}
           <div className="bg-white p-5 rounded-lg shadow-sm border-l-4 border-orange-500">
             <div className="flex items-center mb-3">
-              <span className="bg-orange-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3">4</span>
-              <h4 className="text-lg font-semibold text-gray-900">Performance Scores (0-100)</h4>
+              <span className="bg-orange-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3">5</span>
+              <h4 className="text-lg font-semibold text-gray-900">Performance Scores</h4>
             </div>
             <div className="grid md:grid-cols-3 gap-6">
               <div className="text-center bg-blue-50 p-4 rounded-lg">
@@ -297,11 +297,11 @@ export function Results({ results, onReset, userEmail }: ResultsProps) {
       {/* Content based on active tab */}
       {activeTab === 'platforms' ? (
         <>
-          {/* Step 5 - Tailored Recommendations */}
+          {/* Step 6 - Platform-Specific Recommendations */}
           <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-xl shadow-sm border border-green-100">
             <div className="flex items-center mb-6">
-              <span className="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3">5</span>
-              <h3 className="text-xl font-bold text-gray-900">Platform-Specific Tailored Recommendations</h3>
+              <span className="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3">6</span>
+              <h3 className="text-xl font-bold text-gray-900">Platform-Specific Recommendations</h3>
             </div>
             
             <div className="grid gap-6">
@@ -327,7 +327,7 @@ export function Results({ results, onReset, userEmail }: ResultsProps) {
                   </div>
                   
                   <div className="mb-4">
-                    <h4 className="text-sm font-semibold text-gray-700 mb-2">AI Prediction:</h4>
+                    <h4 className="text-sm font-semibold text-gray-700 mb-2">Prediction:</h4>
                     <p className="text-gray-600 text-sm leading-relaxed">
                       {recommendation.prediction}
                     </p>

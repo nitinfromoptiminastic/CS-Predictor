@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
     const buffer = Buffer.from(bytes);
 
     // Analyze the asset
-    const result = await ModelService.analyzAsset(buffer, file.name, platforms);
+    const result = await ModelService.analyzeAsset(buffer, file.name, platforms);
 
     console.log(`Asset analysis completed for ${session.user.email}: ${file.name} on platforms: ${platforms.join(', ')}`);
 
