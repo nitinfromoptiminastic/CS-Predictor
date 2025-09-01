@@ -152,12 +152,6 @@ export function Results({ results, onReset, userEmail }: ResultsProps) {
                 </div>
               </div>
             </div>
-            <div className="mt-4">
-              <span className="text-sm font-medium text-gray-600">Why categorized this way:</span>
-              <p className="text-sm text-gray-700 mt-1 italic">
-                &ldquo;{results.analysis.contentIdentification?.context || 'No analysis available'}&rdquo;
-              </p>
-            </div>
           </div>
 
           {/* Step 2 - Strategic Positioning */}
@@ -266,7 +260,7 @@ export function Results({ results, onReset, userEmail }: ResultsProps) {
         <div className="grid md:grid-cols-2 gap-6">
           <div>
             <div className="text-2xl font-bold text-green-600 mb-2">
-              {(results.analysis.brandSafety.score * 100).toFixed(1)}%
+              {results.analysis.brandSafety.score.toFixed(1)}%
             </div>
             <p className="text-gray-600">Safety Score</p>
           </div>
@@ -297,61 +291,9 @@ export function Results({ results, onReset, userEmail }: ResultsProps) {
       {/* Content based on active tab */}
       {activeTab === 'platforms' ? (
         <>
-          {/* Step 6 - Platform-Specific Recommendations */}
-          <div className="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-xl shadow-sm border border-green-100">
-            <div className="flex items-center mb-6">
-              <span className="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3">6</span>
-              <h3 className="text-xl font-bold text-gray-900">Platform-Specific Recommendations</h3>
-            </div>
-            
-            <div className="grid gap-6">
-              {results.analysis.tailoredRecommendations && Object.entries(results.analysis.tailoredRecommendations).map(([platform, recommendation]) => (
-                <div key={platform} className="bg-white p-5 rounded-lg shadow-sm border">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center">
-                      <div className="bg-gray-100 px-3 py-1 rounded-full text-sm font-semibold text-gray-700 capitalize mr-3">
-                        {platform === 'twitter' ? 'X' : platform}
-                      </div>
-                      <div className="text-lg font-bold text-green-600">
-                        Score: {recommendation.score}
-                      </div>
-                    </div>
-                    <div className="flex-1 ml-4">
-                      <div className="bg-gray-200 rounded-full h-2">
-                        <div 
-                          className="bg-green-500 h-2 rounded-full transition-all duration-500" 
-                          style={{ width: `${recommendation.score}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="mb-4">
-                    <h4 className="text-sm font-semibold text-gray-700 mb-2">Prediction:</h4>
-                    <p className="text-gray-600 text-sm leading-relaxed">
-                      {recommendation.prediction}
-                    </p>
-                  </div>
-                  
-                  <div>
-                    <h4 className="text-sm font-semibold text-gray-700 mb-2">Optimization Tips:</h4>
-                    <ul className="space-y-1">
-                      {recommendation.optimizationTips.map((tip, index) => (
-                        <li key={index} className="text-gray-600 text-sm flex items-start">
-                          <span className="text-green-500 mr-2 mt-1">•</span>
-                          {tip}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          
           <div className="bg-gradient-to-br from-orange-50 to-red-50 p-6 rounded-xl shadow-sm border border-orange-100">
             <div className="flex items-center mb-4">
-              <span className="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3">5</span>
+              <span className="bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold mr-3">4</span>
               <h3 className="text-xl font-bold text-gray-900">Tailored Recommendations (3-4 Max)</h3>
               <div className="ml-auto text-sm text-orange-700 bg-orange-100 px-3 py-1 rounded-full font-medium">
                 Content-specific • Actionable • No vague tips

@@ -118,7 +118,6 @@ export interface AssetAnalysis {
     tiktok: number;
     linkedin: number;
     twitter: number;
-    youtube: number;
     facebook: number;
     snapchat: number;
   };
@@ -134,7 +133,7 @@ export interface AssetAnalysis {
       optimizationTips: string[];
     };
   };
-  // Original analysis properties
+  // Original analysis properties with AI enhancements
   visualFeatures: {
     faces: number;
     objects: string[];
@@ -142,6 +141,9 @@ export interface AssetAnalysis {
     textDensity: number;
     logoVisibility: number;
     colorHarmony: number;
+    extractedText?: string;
+    dominantColors?: string[];
+    visualStyle?: string;
   };
   brandSafety: {
     nsfw: boolean;

@@ -18,13 +18,17 @@ export function FileUpload({ onFileSelect, selectedFile }: FileUploadProps) {
     if (file) {
       onFileSelect(file);
       
-      // Create preview for images
+      // Create preview for images and videos
       if (file.type.startsWith('image/')) {
         const reader = new FileReader();
         reader.onload = (e) => {
           setPreview(e.target?.result as string);
         };
         reader.readAsDataURL(file);
+      } else if (file.type.startsWith('video/')) {
+        // Create video preview URL
+        const videoUrl = URL.createObjectURL(file);
+        setPreview(videoUrl);
       } else {
         setPreview(null);
       }
@@ -42,6 +46,10 @@ export function FileUpload({ onFileSelect, selectedFile }: FileUploadProps) {
   });
 
   const handleRemove = () => {
+    // Clean up object URLs for videos
+    if (preview && selectedFile?.type.startsWith('video/')) {
+      URL.revokeObjectURL(preview);
+    }
     onFileSelect(null);
     setPreview(null);
   };
@@ -79,13 +87,25 @@ export function FileUpload({ onFileSelect, selectedFile }: FileUploadProps) {
           {preview && (
             <div className="mt-4 flex justify-center">
               <div className="relative overflow-hidden rounded-xl shadow-md">
-                <Image 
-                  src={preview} 
-                  alt={`Preview of ${selectedFile.name}`}
-                  width={300}
-                  height={200}
-                  className="max-w-full h-48 object-cover"
-                />
+                {selectedFile.type.startsWith('image/') ? (
+                  <Image 
+                    src={preview} 
+                    alt={`Preview of ${selectedFile.name}`}
+                    width={300}
+                    height={200}
+                    className="max-w-full h-48 object-cover"
+                  />
+                ) : selectedFile.type.startsWith('video/') ? (
+                  <video 
+                    src={preview}
+                    controls
+                    className="max-w-full h-48 object-cover"
+                    width={300}
+                    height={200}
+                  >
+                    Your browser does not support video playback.
+                  </video>
+                ) : null}
               </div>
             </div>
           )}
@@ -93,6 +113,11 @@ export function FileUpload({ onFileSelect, selectedFile }: FileUploadProps) {
           <div className="flex items-center justify-center mt-4 text-green-700 bg-green-100 rounded-lg py-2 px-4">
             <div className="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
             File uploaded successfully
+            {selectedFile.type.startsWith('video/') && (
+              <div className="ml-4 text-xs text-green-600">
+                • Video analysis based on content optimization
+              </div>
+            )}
           </div>
         </div>
       ) : (

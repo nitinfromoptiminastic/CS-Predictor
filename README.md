@@ -38,28 +38,18 @@ npm install
 
 # Set up environment variables
 cp .env.local.example .env.local
-# Edit .env.local with your Google OAuth credentials
+# Edit .env.local with your credentials
 
 # Run development server
 npm run dev
 ```
 
-### 2. Python Service Setup
+### 2. OpenAI Setup
 
-```bash
-# Navigate to python service
-cd python-service
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Run the service
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
-```
+1. Go to [OpenAI Platform](https://platform.openai.com/)
+2. Create an account and add billing information
+3. Generate an API key
+4. Add the API key to `.env.local`
 
 ### 3. Google OAuth Setup
 
@@ -80,7 +70,7 @@ NEXTAUTH_URL=http://localhost:3000
 NEXTAUTH_SECRET=your-nextauth-secret-here
 GOOGLE_CLIENT_ID=your-google-client-id
 GOOGLE_CLIENT_SECRET=your-google-client-secret
-PYTHON_MODEL_SERVICE_URL=http://localhost:8000
+OPENAI_API_KEY=your-openai-api-key
 ```
 
 ## User Flow
@@ -103,7 +93,7 @@ PYTHON_MODEL_SERVICE_URL=http://localhost:8000
 ## Development Notes
 
 ### Current State
-- Uses mock AI predictions for development
+- Uses real OpenAI GPT-4O Vision API for analysis
 - In-memory audit logging (production should use database)
 - Brand safety checks are simulated
 

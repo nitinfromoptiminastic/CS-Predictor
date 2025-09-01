@@ -6,6 +6,7 @@ import { User, LogOut, ChevronDown, Eye, Sparkles } from 'lucide-react';
 import { FileUpload } from './file-upload';
 import { PlatformSelector } from './platform-selector';
 import { Results } from './results';
+import SubscriptionError from './subscription-error';
 import { PredictionResult, AssetAnalysis } from '@/types';
 
 export function Dashboard() {
@@ -14,6 +15,8 @@ export function Dashboard() {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
+  const [showSubscriptionError, setShowSubscriptionError] = useState(false);
+  const [subscriptionErrorData, setSubscriptionErrorData] = useState<{ billingUrl?: string }>({});
   const menuRef = useRef<HTMLDivElement>(null);
   const [results, setResults] = useState<{
     predictions: PredictionResult[];
@@ -61,10 +64,18 @@ export function Dashboard() {
           fileType: data.fileType,
         });
       } else {
-        console.error('Analysis failed:', data.error);
+        // Check for subscription errors
+        if (data.error === 'SUBSCRIPTION_EXPIRED') {
+          setSubscriptionErrorData({ billingUrl: data.billingUrl });
+          setShowSubscriptionError(true);
+        } else {
+          console.error('Analysis failed:', data.error);
+          alert(`Analysis failed: ${data.error}`);
+        }
       }
     } catch (error) {
       console.error('Error analyzing asset:', error);
+      alert('Network error occurred. Please check your connection and try again.');
     } finally {
       setIsAnalyzing(false);
     }
@@ -254,6 +265,14 @@ export function Dashboard() {
           />
         )}
       </main>
+      
+      {/* Subscription Error Modal */}
+      {showSubscriptionError && (
+        <SubscriptionError 
+          billingUrl={subscriptionErrorData.billingUrl}
+          onClose={() => setShowSubscriptionError(false)}
+        />
+      )}
     </div>
   );
 }
