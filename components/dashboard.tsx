@@ -52,9 +52,24 @@ export function Dashboard() {
       const response = await fetch('/api/predict', {
         method: 'POST',
         body: formData,
+        // Add timeout for video processing
+        signal: AbortSignal.timeout(120000), // 2 minutes timeout
       });
 
       const data = await response.json();
+      
+      // Check if the response was successful
+      if (!response.ok) {
+        // Handle API errors
+        if (data.error === 'SUBSCRIPTION_EXPIRED') {
+          setSubscriptionErrorData({ billingUrl: data.billingUrl });
+          setShowSubscriptionError(true);
+        } else {
+          console.error('API Error:', data.error);
+          alert(`Analysis failed: ${data.error || 'Server error occurred'}`);
+        }
+        return;
+      }
       
       if (data.success) {
         setResults({
@@ -75,7 +90,17 @@ export function Dashboard() {
       }
     } catch (error) {
       console.error('Error analyzing asset:', error);
-      alert('Network error occurred. Please check your connection and try again.');
+      
+      // Check for specific error types
+      if (error instanceof DOMException && error.name === 'TimeoutError') {
+        alert('Analysis timed out. Video processing can take up to 2 minutes. Please try again.');
+      } else if (error instanceof DOMException && error.name === 'AbortError') {
+        alert('Analysis was cancelled due to timeout. Please try with a smaller file.');
+      } else if (error instanceof TypeError && error.message.includes('fetch')) {
+        alert('Network error occurred. Please check your connection and try again.');
+      } else {
+        alert(`Analysis failed: ${error instanceof Error ? error.message : 'Unknown error occurred'}`);
+      }
     } finally {
       setIsAnalyzing(false);
     }
