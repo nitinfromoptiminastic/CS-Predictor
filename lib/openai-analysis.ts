@@ -40,11 +40,12 @@ export async function analyzeContentWithOpenAI(
 ): Promise<ContentAnalysisResult> {
   try {
     return await performOpenAIAnalysis(file, platforms);
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('OpenAI analysis failed:', error);
     
     // Check if it's a quota/billing error (429)
-    if (error?.status === 429 || error?.code === 'insufficient_quota') {
+    const errorObj = error as { status?: number; code?: string };
+    if (errorObj?.status === 429 || errorObj?.code === 'insufficient_quota') {
       throw new Error('SUBSCRIPTION_EXPIRED');
     }
     
@@ -108,7 +109,7 @@ async function performOpenAIAnalysis(
             reasoning: `Video content generally performs well on ${platform}, especially with proper length optimization and engaging opening`
           };
           return acc;
-        }, {} as Record<string, any>),
+        }, {} as Record<string, { score: number; optimizations: string[]; reasoning: string }>),
         overallScore: 80 // Videos generally have good engagement potential
       };
     }
@@ -368,7 +369,7 @@ Only include platforms that were requested: ${platforms.join(', ')}. Be extremel
             reasoning: `Analysis based on content type: ${contentAnalysis.contentType?.type || 'Unknown'}`
           };
           return acc;
-        }, {} as Record<string, any>)
+        }, {} as Record<string, { score: number; optimizations: string[]; reasoning: string }>)
       };
     }
 
