@@ -5,8 +5,14 @@ let openaiClient: OpenAI | null = null;
 
 function getOpenAIClient(): OpenAI {
   if (!openaiClient) {
+    const apiKey = process.env.OPENAI_API_KEY;
+    
+    if (!apiKey || apiKey.trim() === '') {
+      throw new Error('OPENAI_API_KEY environment variable is missing or empty');
+    }
+    
     openaiClient = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
+      apiKey: apiKey.trim(),
     });
   }
   return openaiClient;
