@@ -1,9 +1,16 @@
 import OpenAI from 'openai';
 
-// Initialize OpenAI client
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Lazy-load OpenAI client to avoid build-time initialization
+let openaiClient: OpenAI | null = null;
+
+function getOpenAIClient(): OpenAI {
+  if (!openaiClient) {
+    openaiClient = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+  }
+  return openaiClient;
+}
 
 export interface ContentAnalysisResult {
   contentType: {
@@ -160,7 +167,7 @@ Required JSON structure:
 
 Analyze every detail you can see in the image. Return ONLY valid JSON with no markdown formatting, code blocks, or additional text.`;
 
-    const contentResponse = await openai.chat.completions.create({
+    const contentResponse = await getOpenAIClient().chat.completions.create({
       model: "gpt-4o",
       response_format: { type: "json_object" },
       messages: [
@@ -298,7 +305,7 @@ Required JSON structure:
 
 Only include platforms that were requested: ${platforms.join(', ')}. Be extremely specific and actionable with recommendations. Return ONLY valid JSON with no markdown formatting, code blocks, or additional text.`;
 
-    const platformResponse = await openai.chat.completions.create({
+    const platformResponse = await getOpenAIClient().chat.completions.create({
       model: "gpt-4o",
       response_format: { type: "json_object" },
       messages: [
