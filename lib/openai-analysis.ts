@@ -391,6 +391,44 @@ Only include platforms that were requested: ${platforms.join(', ')}. Be extremel
 
 
 
+interface VideoAnalysisResult {
+  contentType?: {
+    type?: string;
+    confidence?: number;
+    reasoning?: string;
+  };
+  visualElements?: {
+    objects?: string[];
+    people?: {
+      count?: number;
+      demographics?: string[];
+      actions?: string[];
+    };
+    text?: {
+      hasText?: boolean;
+      textElements?: string[];
+      textPlacement?: string;
+    };
+    visualStyle?: {
+      productionQuality?: string;
+      colorScheme?: string[];
+      mood?: string;
+      lighting?: string;
+    };
+  };
+  contentAnalysis?: {
+    primaryMessage?: string;
+    targetAudience?: string;
+    callToAction?: string;
+    brandingLevel?: string;
+  };
+  technicalAspects?: {
+    visualQuality?: number;
+    consistency?: number;
+    engagement?: number;
+  };
+}
+
 // Video analysis functions
 
 async function analyzeVideoFile(file: File, platforms: string[]): Promise<ContentAnalysisResult> {
@@ -496,7 +534,7 @@ Be specific and analytical. Avoid generic responses. Base everything on the actu
       },
       strategicPositioning: {
         primary: getStrategicPositioning(analysisResult.contentType?.type),
-        secondary: getSecondaryStrategies(analysisResult.contentType?.type, analysisResult.contentAnalysis),
+        secondary: getSecondaryStrategies(analysisResult.contentType?.type),
         reasoning: analysisResult.contentType?.reasoning || 'Analysis based on video content'
       },
       visualAnalysis: {
@@ -536,7 +574,7 @@ function getStrategicPositioning(contentType?: string): string {
   }
 }
 
-function getSecondaryStrategies(contentType?: string, contentAnalysis?: any): string[] {
+function getSecondaryStrategies(contentType?: string): string[] {
   const base = ['Community Engagement', 'Brand Recognition'];
   
   switch (contentType) {
@@ -557,7 +595,7 @@ function getSecondaryStrategies(contentType?: string, contentAnalysis?: any): st
 }
 
 async function generateVideoRecommendationsFromAnalysis(
-  analysis: any,
+  analysis: VideoAnalysisResult,
   platforms: string[],
   videoSizeMB: number
 ): Promise<Record<string, { score: number; optimizations: string[]; reasoning: string }>> {
@@ -596,7 +634,7 @@ async function generateVideoRecommendationsFromAnalysis(
         baseScore = productionQuality === 'professional' ? baseScore + 5 : baseScore;
         optimizations = [
           `Visual quality (${Math.round(visualQuality * 100)}%) is ${visualQuality > 0.8 ? 'excellent' : 'good'} for Instagram`,
-          analysis.visualElements?.visualStyle?.colorScheme?.length > 0 ? 'Great color scheme - maintain consistency with brand palette' : 'Consider enhancing color grading for Instagram',
+          (analysis.visualElements?.visualStyle?.colorScheme?.length ?? 0) > 0 ? 'Great color scheme - maintain consistency with brand palette' : 'Consider enhancing color grading for Instagram',
           contentType === 'Brand Story' ? 'Perfect content type for Instagram Stories and Feed' : 'Adapt content style for Instagram\'s visual-first approach',
           hasText ? 'Text elements present - ensure they\'re readable on mobile' : 'Consider adding text overlays for silent viewing'
         ];
@@ -616,7 +654,7 @@ async function generateVideoRecommendationsFromAnalysis(
         optimizations = [
           hasText ? 'Good - has text/captions for Facebook\'s silent viewing' : 'Add captions - most Facebook videos are watched without sound',
           `Production quality (${productionQuality}) works well for Facebook's diverse audience`,
-          analysis.visualElements?.people?.count > 0 ? 'Great - people in video increase Facebook engagement' : 'Consider featuring people for better Facebook performance',
+          (analysis.visualElements?.people?.count ?? 0) > 0 ? 'Great - people in video increase Facebook engagement' : 'Consider featuring people for better Facebook performance',
           `Content type (${contentType}) performs ${contentType === 'Brand Story' ? 'excellently' : 'well'} on Facebook`
         ];
         break;
@@ -641,7 +679,7 @@ async function generateVideoRecommendationsFromAnalysis(
     }
 
     // Adjust score based on content analysis
-    if (analysis.technicalAspects?.engagement > 0.8) baseScore += 5;
+    if ((analysis.technicalAspects?.engagement ?? 0) > 0.8) baseScore += 5;
     if (analysis.contentAnalysis?.brandingLevel === 'heavy' && platform !== 'linkedin') baseScore -= 3;
     if (videoSizeMB > 50) baseScore -= 5;
 
@@ -655,7 +693,7 @@ async function generateVideoRecommendationsFromAnalysis(
   }, {} as Record<string, { score: number; optimizations: string[]; reasoning: string }>);
 }
 
-function calculateScoreFromVideoAnalysis(analysis: any): number {
+function calculateScoreFromVideoAnalysis(analysis: VideoAnalysisResult): number {
   const visualQuality = analysis.technicalAspects?.visualQuality || 0.8;
   const consistency = analysis.technicalAspects?.consistency || 0.8;
   const engagement = analysis.technicalAspects?.engagement || 0.7;
