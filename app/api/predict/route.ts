@@ -41,9 +41,44 @@ export async function POST(request: NextRequest) {
 
     // Use real OpenAI analysis
     console.log('Starting OpenAI vision analysis...');
-    const aiResult = await analyzeContentWithOpenAI(file, platforms);
+    let aiResult;
+    try {
+      aiResult = await analyzeContentWithOpenAI(file, platforms);
+    } catch (analysisError) {
+      console.error('OpenAI analysis error:', analysisError);
+      
+      // Handle specific OpenAI errors
+      if (analysisError instanceof Error) {
+        if (analysisError.message.includes('OPENAI_API_KEY')) {
+          return NextResponse.json(
+            { error: 'OpenAI API key is not configured properly. Please check your environment variables.' },
+            { status: 500 }
+          );
+        } else if (analysisError.message.includes('rate limit') || analysisError.message.includes('429')) {
+          return NextResponse.json(
+            { error: 'OpenAI API rate limit exceeded. Please try again in a few minutes.' },
+            { status: 429 }
+          );
+        } else if (analysisError.message.includes('quota') || analysisError.message.includes('billing')) {
+          return NextResponse.json(
+            { error: 'SUBSCRIPTION_EXPIRED', billingUrl: 'https://platform.openai.com/account/billing' },
+            { status: 402 }
+          );
+        } else if (analysisError.message.includes('Invalid JSON') || analysisError.message.includes('not valid JSON')) {
+          return NextResponse.json(
+            { error: 'OpenAI API returned invalid response. This might be due to file size or API issues. Please try again with a smaller file.' },
+            { status: 500 }
+          );
+        }
+      }
+      
+      return NextResponse.json(
+        { error: `Analysis failed: ${analysisError instanceof Error ? analysisError.message : 'Unknown error'}` },
+        { status: 500 }
+      );
+    }
 
-        console.log('OpenAI analysis result keys:', Object.keys(aiResult));
+    console.log('OpenAI analysis result keys:', Object.keys(aiResult));
     console.log('Platform recommendations:', aiResult.platformRecommendations);
     console.log('Overall score:', aiResult.overallScore);
 
